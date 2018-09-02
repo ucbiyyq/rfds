@@ -1,3 +1,5 @@
+library(tidyverse)
+
 # using included car data
 head(mpg)
 describe(mpg)
@@ -157,9 +159,18 @@ ggplot(data=mpg) + geom_point(mapping=aes(x=displ, y=hwy)) + facet_wrap(~ class,
 # using different geoms
 # scatterplot
 ggplot(data=mpg) + geom_point(mapping=aes(x=displ, y=hwy))
-# smooth line plot? trend lines perhaps.
+# smooth line plot? trend lines perhaps. smoothed conditional means.
 ggplot(data=mpg) + geom_smooth(mapping=aes(x=displ, y=hwy))
 # combo of scatterplot and smooth line
 ggplot(data=mpg) + geom_point(mapping=aes(x=displ, y=hwy)) + geom_smooth(mapping=aes(x=displ, y=hwy))
+?geom_smooth
+
+# two-plots-in-one using a shared global mapping
+ggplot(data=mpg, mapping=aes(x=displ, y=hwy)) + geom_point() + geom_smooth()
+# ... and overriding local layer
+ggplot(data=mpg, mapping=aes(x=displ, y=hwy)) + geom_point(mapping=aes(color=class)) + geom_smooth()
+
+
+
 
 

@@ -2,6 +2,13 @@ library(ggplot2)
 ggplot(mpg, aes(x=displ, y=hwy)) + geom_point(aes(colour=class))
 
 
+# online version of book
+# http://r4ds.had.co.nz/
+# https://github.com/hadley/r4ds
+
+
+
+
 # set up packages
 
 install.packages("tidyverse")
