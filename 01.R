@@ -1,8 +1,8 @@
 library(tidyverse)
+# library(ggplot2)
 
 # using included car data
 head(mpg)
-describe(mpg)
 str(mpg)
 
 # scatterplot of displacement vs highway miles-per-gallon
@@ -13,7 +13,7 @@ ggplot(data=mpg) + geom_point(mapping=aes(x=displ, y=hwy))
 # scatterplot of displ vs hwy
 
 # 2 How many rows are in mtcars? How many columns?
-help(mtcars)
+?mtcars
 # 32 rows, 11 variables
 head(mtcars)
 

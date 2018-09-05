@@ -12,13 +12,17 @@ ggplot(mpg, aes(x=displ, y=hwy)) + geom_point(aes(colour=class))
 # set up packages
 
 install.packages("tidyverse")
+# install.packages("tidyverse", dependencies=TRUE)
 library(tidyverse)
 tidyverse_update()
+
+# install.packages("stringi")
 
 
 install.packages(c("nycflights13", "gapminder", "Lahman"))
 
 install.packages("data.table")
+library(data.table)
 
 
 
