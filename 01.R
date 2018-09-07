@@ -170,7 +170,44 @@ ggplot(data=mpg, mapping=aes(x=displ, y=hwy)) + geom_point() + geom_smooth()
 # ... and overriding local layer
 ggplot(data=mpg, mapping=aes(x=displ, y=hwy)) + geom_point(mapping=aes(color=class)) + geom_smooth()
 
+# using different aesthetics mappings for line type
+ggplot(data=mpg) + geom_smooth(mapping=aes(x=displ, y=hwy, linetype=drv))
+
+# layering both geoms and colorizing, to show smoothed conditional means for each drive type overlayed on raw data
+ggplot(data=mpg, mapping=aes(x=displ, y=hwy, color=drv)) + geom_smooth(mapping=aes(linetype=drv)) + geom_point()
+
+
+# group vs not
+ggplot(data=mpg) + geom_smooth(mapping=aes(x=displ, y=hwy))
+ggplot(data=mpg) + geom_smooth(mapping=aes(x=displ, y=hwy, group=drv)) # no legend
+ggplot(data=mpg) + geom_smooth(mapping=aes(x=displ, y=hwy, color=drv))
+ggplot(data=mpg) + geom_smooth(mapping=aes(x=displ, y=hwy, color=drv), show.legend=FALSE)
+
+
+# specifying different data for each layer
+# scatterplot to show all raw data, but line only shows for specific car type and with no confidence interval
+ggplot(data=mpg, mapping=aes(x=displ, y=hwy)) + geom_point(mapping=aes(color=class)) + geom_smooth(data=filter(mpg, class=="subcompact"), se=FALSE)
 
 
 
+
+# Excercises, p 20
+# 1 What geom would you use to draw a line? a boxplot? a histogram? an area chart?
+?geom_line
+ggplot(data=mpg, mapping=aes(x=displ, y=hwy)) + geom_point(mapping=aes(color=drv)) + geom_line() # line to connect the dots
+?geom_abline
+ggplot(data=mpg, mapping=aes(x=displ, y=hwy)) + geom_point(mapping=aes(color=drv)) + geom_abline(intercept=20, slope=0) # line to draw simple straight line
+
+?geom_boxplot
+ggplot(data=mpg, mapping=aes(x=class, y=hwy)) + geom_boxplot()
+
+?geom_histogram
+ggplot(data=mpg, mapping=aes(x=hwy)) + geom_histogram(bins=10) # counts per bin of hwy
+ggplot(data=mpg, mapping=aes(x=hwy, y=displ)) + geom_histogram(bins=10) # does NOT work with a y aesthetic
+
+?geom_area
+ggplot(data=mpg) + geom_area(mapping=aes(x=displ, y=hwy))
+
+
+# 2 
 
