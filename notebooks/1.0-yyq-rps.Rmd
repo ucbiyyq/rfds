@@ -1,0 +1,10 @@
+---
+title: "Rock Paper Scissors"
+output: html_notebook
+---
+
+Played Rock Paper Scissors at Evelyn's house
+
+* I beat five or seven players in a row using dad's algorithm
+* Is dad's algorithm actually better than randomly picking r p s?
+
