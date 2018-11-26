@@ -1705,8 +1705,223 @@ $(document).ready(function () {
 <li>Is dad’s algorithm actually better than randomly picking r p s?</li>
 </ul>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsaWJyYXJ5KHRpZHl2ZXJzZSlcbiMgbG9va3MgbGlrZSByZWFkciBpcyBicm9rZW4gYXQgdGhlIG1vbWVudFxuIyBzZWUgaHR0cHM6Ly9jb21tdW5pdHkucnN0dWRpby5jb20vdC9pc3N1ZS13aXRoLWluc3RhbGxpbmctdGhlLWRyYy1wYWNrYWdlLzE4NzAxLzNcblxuYGBgIn0= -->
+<pre class="r"><code># library(tidyverse)
+# looks like readr is broken at the moment
+# see https://community.rstudio.com/t/issue-with-installing-the-drc-package/18701/3
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5cilcbmxpYnJhcnkoZHBseXIpXG5gYGAifQ== -->
+<pre class="r"><code>library(tidyr)
+library(dplyr)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnN0YXRz4oCZOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
+<pre><code>
+Attaching package: ‘dplyr’
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUm9jayBQYXBlciBTY2lzc29ycyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKUGxheWVkIFJvY2sgUGFwZXIgU2Npc3NvcnMgYXQgRXZlbHluJ3MgaG91c2UKCiogSSBiZWF0IGZpdmUgb3Igc2V2ZW4gcGxheWVycyBpbiBhIHJvdyB1c2luZyBkYWQncyBhbGdvcml0aG0KKiBJcyBkYWQncyBhbGdvcml0aG0gYWN0dWFsbHkgYmV0dGVyIHRoYW4gcmFuZG9tbHkgcGlja2luZyByIHAgcz8KCg==</div>
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtYWdyaXR0cilcbmBgYCJ9 -->
+<pre class="r"><code>library(magrittr)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYbWFncml0dHLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTp0aWR5cuKAmTpcblxuICAgIGV4dHJhY3RcbiJ9 -->
+<pre><code>
+Attaching package: ‘magrittr’
+
+The following object is masked from ‘package:tidyr’:
+
+    extract</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxuYGBgIn0= -->
+<pre class="r"><code>library(ggplot2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="section" class="section level1">
+<h1>1</h1>
+<p>Rules for our simulation</p>
+<ul>
+<li>Alice is our stand-in: every win, she gets a point, every tie she gets no points, and every loss she looses a point</li>
+<li>Bob is our opponent</li>
+</ul>
+<p>Some simulation parameters and helper functions</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubm0gPC0gYyhcInJvY2tcIiwgXCJwYXBlclwiLCBcInNjaXNzb3JzXCIpXG5ycHMgPC0gZmFjdG9yKG5tLCBsZXZlbHMgPSBubSlcbm4uZ2FtZXMgPC0gNjAwMDBcbmBgYCJ9 -->
+<pre class="r"><code>nm &lt;- c(&quot;rock&quot;, &quot;paper&quot;, &quot;scissors&quot;)
+rps &lt;- factor(nm, levels = nm)
+n.games &lt;- 60000</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBoZWxwZXIgZnVuY3Rpb24sIGdpdmVuIHZlY3RvcnMgb2YgYWxpY2UgYW5kIGJvYiByZXN1bHRzLCBjb2x1bW4gYmluZHMgYW5kIGNhbGN1bGF0aW5nIHRoZSBzY29yZSBvZiBlYWNoIGdhbWUgXG5jYWxjLndpbnMgPC0gZnVuY3Rpb24gKGFsaWNlLCBib2IpIHtcbiAgICBnYW1lcyA8LSBiaW5kX2NvbHMobGlzdChhbGljZSwgYm9iKSkgJT4lIFxuICAgICAgICByZW5hbWUoYWxpY2UgPSBWMSwgYm9iID0gVjIpICU+JSBcbiAgICAgICAgbXV0YXRlKHNjb3JlID0gY2FzZV93aGVuKFxuICAgICAgICAgICAgYWxpY2UgPT0gXCJyb2NrXCIgJiBib2IgPT0gXCJyb2NrXCIgfiAwXG4gICAgICAgICAgICAsIGFsaWNlID09IFwicGFwZXJcIiAmIGJvYiA9PSBcInJvY2tcIiB+IDFcbiAgICAgICAgICAgICwgYWxpY2UgPT0gXCJzY2lzc29yc1wiICYgYm9iID09IFwicm9ja1wiIH4gLTFcbiAgICAgICAgICAgICwgYWxpY2UgPT0gXCJyb2NrXCIgJiBib2IgPT0gXCJwYXBlclwiIH4gLTFcbiAgICAgICAgICAgICwgYWxpY2UgPT0gXCJwYXBlclwiICYgYm9iID09IFwicGFwZXJcIiB+IDBcbiAgICAgICAgICAgICwgYWxpY2UgPT0gXCJzY2lzc29yc1wiICYgYm9iID09IFwicGFwZXJcIiB+IDFcbiAgICAgICAgICAgICwgYWxpY2UgPT0gXCJyb2NrXCIgJiBib2IgPT0gXCJzY2lzc29yc1wiIH4gMVxuICAgICAgICAgICAgLCBhbGljZSA9PSBcInBhcGVyXCIgJiBib2IgPT0gXCJzY2lzc29yc1wiIH4gLTFcbiAgICAgICAgICAgICwgYWxpY2UgPT0gXCJzY2lzc29yc1wiICYgYm9iID09IFwic2Npc3NvcnNcIiB+IDBcbiAgICAgICAgICAgICwgVFJVRSB+IDBcbiAgICAgICAgKSlcbiAgICByZXR1cm4oZ2FtZXMpXG59XG5gYGAifQ== -->
+<pre class="r"><code># helper function, given vectors of alice and bob results, column binds and calculating the score of each game 
+calc.wins &lt;- function (alice, bob) {
+    games &lt;- bind_cols(list(alice, bob)) %&gt;% 
+        rename(alice = V1, bob = V2) %&gt;% 
+        mutate(score = case_when(
+            alice == &quot;rock&quot; &amp; bob == &quot;rock&quot; ~ 0
+            , alice == &quot;paper&quot; &amp; bob == &quot;rock&quot; ~ 1
+            , alice == &quot;scissors&quot; &amp; bob == &quot;rock&quot; ~ -1
+            , alice == &quot;rock&quot; &amp; bob == &quot;paper&quot; ~ -1
+            , alice == &quot;paper&quot; &amp; bob == &quot;paper&quot; ~ 0
+            , alice == &quot;scissors&quot; &amp; bob == &quot;paper&quot; ~ 1
+            , alice == &quot;rock&quot; &amp; bob == &quot;scissors&quot; ~ 1
+            , alice == &quot;paper&quot; &amp; bob == &quot;scissors&quot; ~ -1
+            , alice == &quot;scissors&quot; &amp; bob == &quot;scissors&quot; ~ 0
+            , TRUE ~ 0
+        ))
+    return(games)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="section-1" class="section level1">
+<h1>2</h1>
+<p>In a set of purely random games, we would not expect a clear winner or looser, e.g. uniform distribution of -1, 0, 1</p>
+<p>so we simulate the games</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWxpY2UgPC0gc2FtcGxlKHJwcywgbi5nYW1lcywgcmVwbGFjZSA9IFRSVUUpXG5ib2IgPC0gc2FtcGxlKHJwcywgbi5nYW1lcywgcmVwbGFjZSA9IFRSVUUpXG5nYW1lcyA8LSBjYWxjLndpbnMoYWxpY2UsIGJvYilcbmBgYCJ9 -->
+<pre class="r"><code>alice &lt;- sample(rps, n.games, replace = TRUE)
+bob &lt;- sample(rps, n.games, replace = TRUE)
+games &lt;- calc.wins(alice, bob)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>So let’s see what the distribution of the scores were from the simulation.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2FtZXMgJT4lIGNvdW50KHNjb3JlKVxuYGBgIn0= -->
+<pre class="r"><code>games %&gt;% count(score)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6M30sInJkZiI6IlVrUllNZ3BZQ2dBQUFBSUFBd1VBQUFJREFBQUFCQUlBQUFBQkFBUUFDUUFBQUFGNEFBQURFd0FBQUFJQUFBQU9BQUFBQTcvd0FBQUFBQUFBQUFBQUFBQUFBQUEvOEFBQUFBQUFBQUFBQUEwQUFBQURBQUJQSHdBQVRhY0FBRTJhQUFBRUFnQUFBQUVBQkFBSkFBQUFCVzVoYldWekFBQUFFQUFBQUFJQUJBQUpBQUFBQlhOamIzSmxBQVFBQ1FBQUFBRnVBQUFFQWdBQUFBRUFCQUFKQUFBQUNYSnZkeTV1WVcxbGN3QUFBQTBBQUFBQ2dBQUFBUC8vLy8wQUFBUUNBQUFBQVFBRUFBa0FBQUFGWTJ4aGMzTUFBQUFRQUFBQUFRQUVBQWtBQUFBS1pHRjBZUzVtY21GdFpRQUFBUDRBQUFRQ0FBQUFBUUFFQUFrQUFBQUhiM0IwYVc5dWN3QUFBaE1BQUFBRkFBQUFFQUFBQUFFQUJBQUpBQUFBQVhJQUFBQVFBQUFBQVFBRUFBa0FBQUFQZFc1dVlXMWxaQzFqYUhWdWF5MDJBQUFBQ2dBQUFBRUFBQUFBQUFBQURRQUFBQUVBQUFBREFBQUFEUUFBQUFFQUFBQUNBQUFFQWdBQUF2OEFBQUFRQUFBQUJRQUVBQWtBQUFBR1pXNW5hVzVsQUFRQUNRQUFBQVZzWVdKbGJBQUVBQWtBQUFBT2NtOTNibUZ0WlhNdWNISnBiblFBQkFBSkFBQUFDbkp2ZDNNdWRHOTBZV3dBQkFBSkFBQUFDbU52YkhNdWRHOTBZV3dBQUFEK0FBQUEvZz09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["score"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"-1","2":"20255"},{"1":"0","2":"19879"},{"1":"1","2":"19866"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[3]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2FtZXMgJT4lIFxuICAgIGdncGxvdChhZXMoeCA9IGZhY3RvcihzY29yZSkpKSArXG4gICAgZ2VvbV9iYXIoKSArIFxuICAgIGxhYnModGl0bGUgPSBcIkxvb2tzIGxpa2UgYSB1bmlmb3JtIGRpc3RyaWJ1dGlvbiBvbiB0aGUgc2NvcmVzXCIsIHggPSBcIlNjb3JlXCIsIHkgPSBcIkNvdW50XCIsIGNhcHRpb24gPSBcImZyb20gcmFuZG9tIHZzIHJhbmRvbVwiKVxuYGBgIn0= -->
+<pre class="r"><code>games %&gt;% 
+    ggplot(aes(x = factor(score))) +
+    geom_bar() + 
+    labs(title = &quot;Looks like a uniform distribution on the scores&quot;, x = &quot;Score&quot;, y = &quot;Count&quot;, caption = &quot;from random vs random&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-plot-begin eyJjb25kaXRpb25zIjpbXSwiaGVpZ2h0Ijo0MDAuNDk0NCwic2l6ZV9iZWhhdmlvciI6MCwid2lkdGgiOjY0OH0= -->
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAogAAAGQCAMAAAAa+mHjAAAC9FBMVEUAAAABAQECAgIDAwMEBAQFBQUGBgYHBwcICAgJCQkKCgoLCwsMDAwNDQ0ODg4PDw8QEBARERESEhITExMUFBQVFRUWFhYXFxcYGBgZGRkaGhobGxscHBwdHR0eHh4fHx8gICAhISEiIiIjIyMkJCQmJiYnJycoKCgpKSkqKiorKyssLCwtLS0vLy8wMDAxMTEyMjIzMzM0NDQ1NTU2NjY3Nzc4ODg5OTk6Ojo7Ozs8PDw9PT0+Pj4/Pz9AQEBBQUFCQkJDQ0NERERFRUVGRkZHR0dISEhJSUlKSkpLS0tMTExNTU1OTk5PT09QUFBRUVFSUlJTU1NUVFRVVVVWVlZXV1dYWFhZWVlaWlpbW1tcXFxdXV1eXl5fX19gYGBhYWFiYmJjY2NkZGRlZWVmZmZnZ2doaGhpaWlqampra2tsbGxtbW1ubm5vb29wcHBxcXFycnJzc3N0dHR1dXV2dnZ3d3d4eHh5eXl6enp7e3t8fHx9fX1+fn5/f3+AgICBgYGCgoKDg4OEhISFhYWGhoaHh4eIiIiJiYmKioqLi4uMjIyNjY2Ojo6Pj4+QkJCRkZGSkpKTk5OUlJSVlZWWlpaXl5eYmJiZmZmampqbm5ucnJydnZ2enp6fn5+goKChoaGioqKjo6OkpKSlpaWmpqanp6eoqKipqamqqqqrq6utra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4uLi5ubm6urq7u7u8vLy9vb2+vr6/v7/AwMDBwcHCwsLDw8PExMTFxcXGxsbHx8fIyMjJycnKysrLy8vMzMzNzc3Ozs7Pz8/Q0NDR0dHS0tLT09PU1NTV1dXW1tbX19fY2NjZ2dna2trb29vd3d3e3t7f39/g4ODh4eHi4uLj4+Pk5OTl5eXm5ubn5+fo6Ojp6enq6urr6+vs7Ozt7e3u7u7v7+/w8PDx8fHy8vLz8/P09PT19fX29vb39/f4+Pj5+fn6+vr7+/v8/Pz9/f3+/v7///9yJgYcAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAXLUlEQVR4nO2de3wV5ZnHByIGBAQvSaRYFYKKSpBYQKkNeN219RaLaAhUsYJyq4CICgiIES3VykVFRIu460oFXV3dasRg7HpBKHSjWKWyIBgQlFtCOCQ5zz87c65znpxLDp7MzPPw+/6Rd86Zec/7ncn3k8mJejQIAA9guC0AgAVCBJ4AIQJPgBCBJ0CIwBMgROAJMhPiKONAkr1Zs+M+XTiEqFPXhLubgzW9YVj7aWlMKfplcFqClztgPJ1krSNkwLVHPPWoweUQu533o0K0pq80blmTxhQrRGtahIoy+8vFDTFwSMykZhOYihBT43KISXY3lz8YNekcboUYw4z29kdxQ4w9JC0CUxFiauSHONeoT+dwhOhNMh5ieVGn7rfsjtmySvvi5AG1tHv06W3PWRw+0grR+hZFdlPVr3JOKt4Y3u9/8rzjTrzkg/DD/Nso9FoDRv3tZ23zrWDM6dcahjHJttiA3/2171AqGvXmhZ0u+fqryzud/mzk9Rae33Hg+1aI1qphlyJz/pzQLPP5A8ZTj/XqNPBD+4KhQ661n1PUgZ127I7w1I8Hduy+0Hoi9hSjF+SNizt0u6+WmpxIdELsxVNHpkN8pdU5U0dmn7bfvmV+L7f+tGAP0cC2Q+7vbawMHWoLMbj7k3ZnT7urc+cvQ/ufNS59aERux92hh7YQr+x2z4IC493A9A23G3/50rbYgBtyej1ORb3y5049tkeXcfO7t94UeoGpRuH917XLC4UYdlk7LLt8c2hWIMRzcu6dktvmA9uCoUOutZ9T1IGdduyO0NQep9y74DxjVZNTjFyQZUb/mSWtRlCTE4lOiL146shwiIe79zJ/Y3vXeNi2ZX4vd53Vo5qo2vzhQIe6jQtNioYY3O2/uPAQ0T873hTaf2lBI9Eqozz00Bai8SbRjlb3Badbt2bbYgMC99aiY838RhuPEr1nvBycvy37isNEs41giFGX4M3TCP2APWAc+xXR5g5F9gXD99eYZcIOsafNdoRf/W2i7cZ0fooRibqfDDLdJrf6gZ9IdAK7eOrIcIgbjeetofDnti3KuucCY7W5vcu4fLdtUiTEyO4Fe0x+nRfa/535Q5JeM94IPbSF2MNvbnX5XTRE22IDzrB2Fl1kfplnbLW+/38Kzv8346/m15rjgiFGXYKpBGYFQhxqPTm21aE4IdqXiTjEnjbbEZp6prWZM4mfYkTifeN18+v/zfmGn0h0Art46shwiP9lfGwNw7ratiirzalZg60H04zsq/6wJTwpEmJo90dGkNb+0AFfPD/2glbxQvwXa6urLUTbYgMus7YCb0kWWFbV4RBnGfutoVfo1hxxCaYSmBUIcY61tdj4Mk6I9mUiDrGnzXaEpgaey5vU5BTDEn8yNjV9octir0nsxVNHhkN8I3ghb8m1bVFW7lfjjPetR1Uz+rc+5snQpEiIod2VxpyKAI3B/Y+06nHX8rdjQzxszA6/CbWHaFssuDNOiA8HQywIhRhxsb2vjYa4yNhiWzB8SJNlwr0l3GF/dTNEfophiWeMr+O/kH1CzMVTR4ZD/Cz4be97kW2LsmbR9yf2bqDd6+uIvunXNvTnlkiIod3bjSesp9d/Etz9Q+sZ5s+NNdEQbzW//CN+iLbFEob4UuDWfLB9MMSoCw+xxNoaeWyDbcHwIU2WCfeWcAcLkZ1iRKLc+Iv5cMekv/MXik5gF08dmX6z0q2g1vple5ZtK3B3W2A8S/9tLDMPGdv2cPBY+59vrN3+gh7mq2w//q7g7k+Ml8xf1kcY/xlao1dfs8ux8UO0LZYwxB3trDcrj4TerERdZrTzx4TY5nPzl4J2N9oXDB/SZJlwbwl32F/dDJGdYkRi7wlX1ltum/gLRSewi6eOTIU4earFOlre6txpowJ/fohuWaXVn5O7b99Pjh8281etbg1Nsodo7aZ3j8m/f2Re3jfB3QdOzrljamHP1hf/Lfh4vHHTUzf37ho3RNtiCUOkB4w+Uwcf1ycYYtSlzPj9enuI/U4YN7bz8Z/bF4wcwpeJ9JZwh+3VzRDZKUYlFhgXzvrtMSVNXygygV08dWQqxCDm9/ztizudEfyDdmQr8I9O3jYm0//+MqftWQ/WhSbZQwzspo8vPTFvcPjPfvTxgPZnTTw4M+e14MP9v8055eZdZ8UPMbpY4hCtP2j/omJU6HfEiMuXA9rOt4f4zoM9T7xqY8yC0UPYMpHeEu6wvboVIjvF6AV5uV/7/Ptrm75QdELsxVMH/jUw4AkQIvAECBF4AoQIPAFCBJ4AIQJPgBCBJ0CIwBMgROAJECLwBAgReAKECDxBRkLc5Rg+n3NrZYi6ercN0qbW7+BiCNEhEGJyEKJDIMTkIESHQIjJQYgOgRCTgxAdAiEmByE6BEJMDkJ0CISYHIToEAgxOQjRIRBichCiQyDE5CBEh0CIyUGIDoEQk9OMEN8Z9Ztp24nWjR4xz5dgSBXizZ6nxS80QkxO6hC3Fe+oX3Y31ZZsbihbEX9AiKlBiMlJHeKGRURbh1LlDKL1E+MPCDE1CDE5zbg1E/keXUQrF5o/HIfHH4h2l5aWvlyfELczS01i9wzR6G/xJTJNIzm31sHmhPjh7c82BJsbFn8g2ldWVraqLiFuZ5aaxO4ZosHf4ktkmnoHlcP/O4okIfqfmrzVHCpnmnfpCfEH3JpTg1tzclKHuG5cgzXUDK32z10Rf1AZottGKVGhnEaIL1xTXFxcSrR2/Jj5vgQDQnQBFcpphNh8EKKjqFBGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BukRAPJMTtC5Aagc4qlMPsy2SI+xPi9gVIjUBnFcph9mYyRNyaHUWFcovcmhGio6hQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEI5rRAbbrc+NGzK9cXFi4nWjR4xz8cHhOgCKpTTCfGtu6+2QiyttR7UlmxuKFvBBoToBiqU0wnxszXFZogHSwIPKmcQrZ/IBoToBiqU0wmRaLAZ4telc257eCetXEi0bTgbiL6/8847Xz2cELcvQGoEOqtQDlPb7BC3LN27/4V7gukNYwNCdAMVyumH6Ksn2nuDv3Im0YYJFDvg1uwGKpTTvzWXT6jxvTqNaoZW++euYANCdAMVyumH2LikdNhs8/C148fM9/EBIbqACuX0QmwmCNFRVCgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSi3SIh7E+L2BUiNQGcVymH2ZDLEAwlx+wKkRqCzCuUw+zIZIm7NjqJCuUVuzQjRUVQoI0SGQGcVygiRIdBZhTJCZAh0VqGMEBkCnVUoI0SGQGcVygiRIdBZhTJCZAh0VqGMEBkCnVUoI0SGQGcVygiRIdBZhXKSEC9tsL5WX4cQPY4K5YQhzpljPDTHZMTJCNHjqFBOGGJRkfGLIpNLliFEj6NCOWGIRIX16SeIEF1AhXKSEOngpgAI0eOoUE4S4p+zjQAI0eOoUE4SYrch/7DvQYheRYVykhA7f5Z+ggjRBVQoJwnx+j8jRBHOKpSThPhhway3KkwQosdRoZwkxOwQCNHjqFBOEuKRgxAdRYVykhDZHoToVVQoJwnRMPB3RBHOKpSThGj9U5W/LymoQogeR4VykhCDvDkIIXocFcopQ1zfASF6HBXKSUKssnj/yp7RZxputz6rad3oEfN8CQaE6AIqlJOEGHyrkvtO5Im37r7aDLG2ZHND2Yr4A0J0AxXKSUIMfl6dP/rEZ2uKzRArZ5j364nxB4ToBiqUk4RIjRVPL1jVaP/lb7AZ4sqFRNuGxx+I9pWVla2qS4jbFyA1Ap1VKIc50DTEHee37paf1WdnvBCHxR+IdpeWlr5cnxC3L0BqBDqrUA5zsGmIQy7cQrSlbwkLsXIm0YYJ8Qfcmt1AhXKSW3PuautrRR4LsWZotX/uivgDQnQDFcpJQswJhpjLQqS148fM9yUYEKILqFBOEuKQ/luJtva7idIGITqKCuUkIe4ozMrPzyrcGbc1hOgdVCgnCZEaVy9aVNEYrzSE6CVUKCcL8YhBiI6iQjlhiHXPLzfvzv2m70sQG0L0DCqUE4X4XZ82TxIdKD3+jGqE6HFUKCcK8c5uXwfG7WeORIgeR4VyohBPXxzaeC4fIXocFcqJQmz/bmij/DiE6HFUKCcKsf+C0MYThQjR46hQThTi9NN2BJs6dRJC9DgqlBOFeOjCLo99+u2Gp049+0Ci3BCiR1ChnChE2vtAR8Mwjhm9I/0OEaKzqFBOGCLR4U3vVh2MGxpC9BQqlJOEeOQgREdRoYwQGQKdVSgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSgjRIZAZxXKCJEh0FmFMkJkCHRWoYwQGQKdVSgjRIZAZxXKLRLinoS4fQFSI9BZhXKYHzIZ4sGEuH0BUiPQWYVymP2ZDBG3ZkdRodwit2aE6CgqlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQRogMgc4qlBEiQ6CzCmWEyBDorEIZITIEOqtQPoIQp1xfXLyYaN3oEfN8fECILqBC+QhCLK21vtaWbG4oW8EGhOgGKpTTD/FgSWConEG0fiIbEKIbqFBOP8SvS+fc9vBOWrmQaNtwNhDVLF26dG1NQty+AKkR6KxCOUzzP6hzy9K9+1+4J5jeMDYQ7Rw0aNAz/oS4fQFSI9BZhXKYQ80O0VdPtPcGf+VMog0TKHbArdkNVCinf2sun1Dje3Ua1Qyt9s9dwQaE6AYqlNMPsXFJ6bDZ5uFrx4+Z7+MDQnQBFcrph9gMEKKjqFBGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BGiAyBziqUESJDoLMKZYTIEOisQhkhMgQ6q1BukRB3J8TtC5Aagc4qlCNkMsRDCXH7AqRGoLMK5TA1mQwRt2ZHUaHcIrdmhOgoKpQRIkOgswplhMgQ6KxCGSEyBDqrUEaIDIHOKpQRIkOgswplhMgQ6KxCGSEyBDqrUEaIDIHOKpQRIkOgswplhMgQ6KxCGSEyBDqrUEaIDIHOKpQRIkOgswplhMgQ6KxCGSEyBDqrUEaIDIHOKpQRIkOgswplhMgQ6KxCGSEyBDqrUEaIDIHOKpQRIkOgswplhMgQ6KxCGSEyBDqrUEaIDIHOKpQRIkOgswplhMgQ6KxCGSEyBDqrUM5UiOtGj5jnQ4iuoEI5QyHWlmxuKFuBEF1BhXKGQqycQbR+IkJ0BRXKGQpx5UKibcPNjbry8vJN+xPi9gVIjUBnFcph9mYgxGHmRnVhYeH8I3sNAIjCbzSO9NY8k2jDBHOjcd++fYeSfEJyhvH5nFsrQ9Q1uG2QNrV+Bxf7cSHWDK32z23Gm5VM4/M5t1aGqKt32yBtav0OLvbjQqS148fMb8afbzINQnQCSSHG4Jw1QnQChJgShOgECDElCNEJEGJKEKITIMSUIEQnQIgpQYhOgBBTghCdACGmBCE6AUJMCUJ0AoSYEoToBGJDdI5Zs9w2SJsnx7ltkDbLb3Z+TWEhjh/vtkHalA1x2yBtlgx0fk2E2NIgxGYhLMS5c902SJvn7nPbIG1eG+n8msJCBFpBiMATIETgCcSF2HD7PrcV0iLmkwiE4MY1lhbiW3dfLSrE2E8ikIEr11haiJ+tKRYVYuwnEcjAlWssLUSiwaJCjHwSgShcuMaCQnxvwoQNJDLEYW5bpAtCbAayQox8EoEoEGIzkBVi7CcRSAEhNgNZIcZ+EoEUECI4WkGIwBMgROAJECLwBAgReAKECDwBQgSeACFmGP/Swg65V1S6rSEOhJhh5rd5ZM17I9qscdtDGggxw/ScYn7xD3ThPz+SDULMMCePsr5+bv5ErB58Ut6YOtp5U27eTTuIsj+67FqqGXtah3/9wm1HL4IQM8xE44p//9baaDj3iv9ZlnNf4wX9Klb3P7+RsntNXk3XXbTqw+vyfnBb0oMgxAzT+NI1nY2ec3z0ervviRb/ZnXWFqItrSsoeyrRF1nfEflyXndb0oMgxMzT8Omo7ME0pzDwYFG+9bXb05T9BtErRieT1o+7qudNEGJm2XhDjTU8Y+x/sG/giWCI+Qsou4LoPzpvtsCtuSkIMbPsMpZbw+J2h1/psJfoxUEVWd8Qbc1aFQhxg7GRaM/wjW5behCEmGHGtJ/2VvmjnSaRr8dVH75y2rjGPv1XB9+smCH6L+v1TsVV+YfclvQgCDHDHH6yd8fOhYvqzXco13Q+ZWwt7RiSmxv4840ZIu0Z0aXTNf9029GLIETgCRAi8AQIEXgChAg8AUIEngAhAk+AEIEnQIjAEyBE4AkQIvAECBF4AoQIPAFCPNoZd256n5pXVXDkayWZixCPdtoeTu94hAhagjtbFa27/I5L6Ike3a7fQVU/L+k+cFmfEx6zdlWZz/undel+1WaqumxC7wsrqXHKqT0nmTHFOfjqJeZrTa+5sWuXh9Kea4EQj3ayqarNy3Wr83f6J99MVcaahr6XH1zd1dpjPb/lZ3v8d8ykqqwPqOw6erH3977rCyjewcuvIF/O5iUDG77tuz/duRYI8WjHDPFMounTibblUVVPotueoz0nWXus52nPe388dwpVnUVUfiXd8jRRRUHcgw+euOv1K+nTn45/3Zf2XAuEeLRjhlhohvgA0facwC9xt70YDtF8fsPZcz+aPSWwacY0YhHR6oK4B9Otz9z4itnj8pFnfJv2XEKIIBji6h7fBe6YPMTHb/BXF00Ix/RS7x8O/7og7sG0qt/pPiq7sfFwwWtpzyWECIIh0h/N9xA7m4a4re8p/Z/p+kkopsZ7T+35REHcg6mh62SinZfkdR3lS3suIUTgERAi8AQIEXgChAg8AUIEngAhAk+AEIEnQIjAEyBE4AkQIvAECBF4gv8HRTEdVuvoeiYAAAAASUVORK5CYII=" /></p>
+<!-- rnb-plot-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Well certainly looks uniform, but how to be more precise about it? Let’s use a chi-squared test.</p>
+<p>In a chi-squared test, we’re testing the chances, under the null hypothesis that we should have had a uniform distribution, that we’d see this distribution by random chance</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2FtZXMgJT4lIFxuICAgIGNvdW50KHNjb3JlKSAlPiUgXG4gICAgc3ByZWFkKGtleSA9IHNjb3JlLCB2YWx1ZSA9IG4sIGZpbGwgPSAwKSAlPiUgXG4gICAgY2hpc3EudGVzdCgpXG5gYGAifQ== -->
+<pre class="r"><code>games %&gt;% 
+    count(score) %&gt;% 
+    spread(key = score, value = n, fill = 0) %&gt;% 
+    chisq.test()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5cdENoaS1zcXVhcmVkIHRlc3QgZm9yIGdpdmVuIHByb2JhYmlsaXRpZXNcblxuZGF0YTogIC5cblgtc3F1YXJlZCA9IDQuODgxMSwgZGYgPSAyLCBwLXZhbHVlID0gMC4wODcxMVxuIn0= -->
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  .
+X-squared = 4.8811, df = 2, p-value = 0.08711</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>ok, so the p-value is very high, greater than 70% of the time, we’d see a distribution like this just by chance.</p>
+<p>… what if we did this using resampling technique? Actually this breaks RStudio cloud</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBnYW1lcyAlPiVcbiMgICAgIGNvdW50KHNjb3JlKSAlPiVcbiMgICAgIHNwcmVhZChrZXkgPSBzY29yZSwgdmFsdWUgPSBuLCBmaWxsID0gMCkgJT4lXG4jICAgICBjaGlzcS50ZXN0KHNpbXVsYXRlLnAudmFsdWUgPSBUUlVFKVxuYGBgIn0= -->
+<pre class="r"><code># games %&gt;%
+#     count(score) %&gt;%
+#     spread(key = score, value = n, fill = 0) %&gt;%
+#     chisq.test(simulate.p.value = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>… what if we did this test by hand?</p>
+<p>Well the Pearson residuals for each cell is: (actual - expected) / sqrt(expected)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2FtZXMgJT4lIFxuICAgIGNvdW50KHNjb3JlKSAlPiUgXG4gICAgc3ByZWFkKGtleSA9IHNjb3JlLCB2YWx1ZSA9IG4sIGZpbGwgPSAwKSAlPiUgXG4gICAgbXV0YXRlKFxuICAgICAgICBgLTFgID0gKGAtMWAgLSBuLmdhbWVzLzMpIC8gc3FydChuLmdhbWVzLzMpXG4gICAgICAgICwgYDBgID0gKGAwYCAtIG4uZ2FtZXMvMykgLyBzcXJ0KG4uZ2FtZXMvMylcbiAgICAgICAgLCBgMWAgPSAoYDFgIC0gbi5nYW1lcy8zKSAvIHNxcnQobi5nYW1lcy8zKSlcbmBgYCJ9 -->
+<pre class="r"><code>games %&gt;% 
+    count(score) %&gt;% 
+    spread(key = score, value = n, fill = 0) %&gt;% 
+    mutate(
+        `-1` = (`-1` - n.games/3) / sqrt(n.games/3)
+        , `0` = (`0` - n.games/3) / sqrt(n.games/3)
+        , `1` = (`1` - n.games/3) / sqrt(n.games/3))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MywibnJvdyI6MX0sInJkZiI6IlVrUllNZ3BZQ2dBQUFBSUFBd1VBQUFJREFBQUFCQUlBQUFBQkFBUUFDUUFBQUFGNEFBQURFd0FBQUFNQUFBQU9BQUFBQVQvODJaYkNyd1hZQUFBQURnQUFBQUcvNjJFUmxaOFNtUUFBQUE0QUFBQUJ2KzVTRysrKytSY0FBQVFDQUFBQUFRQUVBQWtBQUFBRmJtRnRaWE1BQUFBUUFBQUFBd0FFQUFrQUFBQUNMVEVBQkFBSkFBQUFBVEFBQkFBSkFBQUFBVEVBQUFRQ0FBQUFBUUFFQUFrQUFBQUpjbTkzTG01aGJXVnpBQUFBRFFBQUFBS0FBQUFBLy8vLy93QUFCQUlBQUFBQkFBUUFDUUFBQUFWamJHRnpjd0FBQUJBQUFBQUJBQVFBQ1FBQUFBcGtZWFJoTG1aeVlXMWxBQUFBL2dBQUJBSUFBQUFCQUFRQUNRQUFBQWR2Y0hScGIyNXpBQUFDRXdBQUFBVUFBQUFRQUFBQUFRQUVBQWtBQUFBQmNnQUFBQkFBQUFBQkFBUUFDUUFBQUJCMWJtNWhiV1ZrTFdOb2RXNXJMVEV3QUFBQUNnQUFBQUVBQUFBQUFBQUFEUUFBQUFFQUFBQUJBQUFBRFFBQUFBRUFBQUFEQUFBRUFnQUFBdjhBQUFBUUFBQUFCUUFFQUFrQUFBQUdaVzVuYVc1bEFBUUFDUUFBQUFWc1lXSmxiQUFFQUFrQUFBQU9jbTkzYm1GdFpYTXVjSEpwYm5RQUJBQUpBQUFBQ25KdmQzTXVkRzkwWVd3QUJBQUpBQUFBQ21OdmJITXVkRzkwWVd3QUFBRCtBQUFBL2c9PSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["-1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["0"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1.803122","2":"-0.8555992","3":"-0.9475231"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>And the chi-squared statistic is defined as the sum of the squared Pearson residuals</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2FtZXMgJT4lIFxuICAgIGNvdW50KHNjb3JlKSAlPiUgXG4gICAgc3ByZWFkKGtleSA9IHNjb3JlLCB2YWx1ZSA9IG4sIGZpbGwgPSAwKSAlPiUgXG4gICAgbXV0YXRlKFxuICAgICAgICBgLTFgID0gKGAtMWAgLSBuLmdhbWVzLzMpIC8gc3FydChuLmdhbWVzLzMpXG4gICAgICAgICwgYDBgID0gKGAwYCAtIG4uZ2FtZXMvMykgLyBzcXJ0KG4uZ2FtZXMvMylcbiAgICAgICAgLCBgMWAgPSAoYDFgIC0gbi5nYW1lcy8zKSAvIHNxcnQobi5nYW1lcy8zKSkgJT4lIFxuICAgIGdhdGhlcihrZXkgPSBzY29yZSwgdmFsdWUgPSByZXNpZHVhbHMpICU+JSBcbiAgICBzdW1tYXJpemUoYyA9IHN1bShyZXNpZHVhbHMpKVxuYGBgIn0= -->
+<pre class="r"><code>games %&gt;% 
+    count(score) %&gt;% 
+    spread(key = score, value = n, fill = 0) %&gt;% 
+    mutate(
+        `-1` = (`-1` - n.games/3) / sqrt(n.games/3)
+        , `0` = (`0` - n.games/3) / sqrt(n.games/3)
+        , `1` = (`1` - n.games/3) / sqrt(n.games/3)) %&gt;% 
+    gather(key = score, value = residuals) %&gt;% 
+    summarize(c = sum(residuals))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MSwibnJvdyI6MX0sInJkZiI6IlVrUllNZ3BZQ2dBQUFBSUFBd1VBQUFJREFBQUFCQUlBQUFBQkFBUUFDUUFBQUFGNEFBQURFd0FBQUFFQUFBQU9BQUFBQVFBQUFBQUFBQUFBQUFBRUFnQUFBQUVBQkFBSkFBQUFCVzVoYldWekFBQUFFQUFBQUFFQUJBQUpBQUFBQVdNQUFBUUNBQUFBQVFBRUFBa0FBQUFKY205M0xtNWhiV1Z6QUFBQURRQUFBQUtBQUFBQS8vLy8vd0FBQkFJQUFBQUJBQVFBQ1FBQUFBVmpiR0Z6Y3dBQUFCQUFBQUFCQUFRQUNRQUFBQXBrWVhSaExtWnlZVzFsQUFBQS9nQUFCQUlBQUFBQkFBUUFDUUFBQUFkdmNIUnBiMjV6QUFBQ0V3QUFBQVVBQUFBUUFBQUFBUUFFQUFrQUFBQUJjZ0FBQUJBQUFBQUJBQVFBQ1FBQUFCQjFibTVoYldWa0xXTm9kVzVyTFRFeEFBQUFDZ0FBQUFFQUFBQUFBQUFBRFFBQUFBRUFBQUFCQUFBQURRQUFBQUVBQUFBQkFBQUVBZ0FBQXY4QUFBQVFBQUFBQlFBRUFBa0FBQUFHWlc1bmFXNWxBQVFBQ1FBQUFBVnNZV0psYkFBRUFBa0FBQUFPY205M2JtRnRaWE11Y0hKcGJuUUFCQUFKQUFBQUNuSnZkM011ZEc5MFlXd0FCQUFKQUFBQUNtTnZiSE11ZEc5MFlXd0FBQUQrQUFBQS9nPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["c"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"0"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="section-2" class="section level1">
+<h1>3</h1>
+<p>But what if Alice uses the following algorithm?</p>
+<ul>
+<li>in first game, randomly pick</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUm9jayBQYXBlciBTY2lzc29ycyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKUGxheWVkIFJvY2sgUGFwZXIgU2Npc3NvcnMgYXQgRXZlbHluJ3MgaG91c2UKCiogSSBiZWF0IGZpdmUgb3Igc2V2ZW4gcGxheWVycyBpbiBhIHJvdyB1c2luZyBkYWQncyBhbGdvcml0aG0KKiBJcyBkYWQncyBhbGdvcml0aG0gYWN0dWFsbHkgYmV0dGVyIHRoYW4gcmFuZG9tbHkgcGlja2luZyByIHAgcz8KCmBgYHtyfQojIGxpYnJhcnkodGlkeXZlcnNlKQojIGxvb2tzIGxpa2UgcmVhZHIgaXMgYnJva2VuIGF0IHRoZSBtb21lbnQKIyBzZWUgaHR0cHM6Ly9jb21tdW5pdHkucnN0dWRpby5jb20vdC9pc3N1ZS13aXRoLWluc3RhbGxpbmctdGhlLWRyYy1wYWNrYWdlLzE4NzAxLzMKCmBgYAoKCgpgYGB7cn0KbGlicmFyeSh0aWR5cikKbGlicmFyeShkcGx5cikKbGlicmFyeShtYWdyaXR0cikKbGlicmFyeShnZ3Bsb3QyKQpgYGAKCiMgMQoKClJ1bGVzIGZvciBvdXIgc2ltdWxhdGlvbgoKKiBBbGljZSBpcyBvdXIgc3RhbmQtaW46IGV2ZXJ5IHdpbiwgc2hlIGdldHMgYSBwb2ludCwgZXZlcnkgdGllIHNoZSBnZXRzIG5vIHBvaW50cywgYW5kIGV2ZXJ5IGxvc3Mgc2hlIGxvb3NlcyBhIHBvaW50CiogQm9iIGlzIG91ciBvcHBvbmVudAoKCgpTb21lIHNpbXVsYXRpb24gcGFyYW1ldGVycyBhbmQgaGVscGVyIGZ1bmN0aW9ucyAKCmBgYHtyfQpubSA8LSBjKCJyb2NrIiwgInBhcGVyIiwgInNjaXNzb3JzIikKcnBzIDwtIGZhY3RvcihubSwgbGV2ZWxzID0gbm0pCm4uZ2FtZXMgPC0gNjAwMDAKYGBgCgoKYGBge3J9CiMgaGVscGVyIGZ1bmN0aW9uLCBnaXZlbiB2ZWN0b3JzIG9mIGFsaWNlIGFuZCBib2IgcmVzdWx0cywgY29sdW1uIGJpbmRzIGFuZCBjYWxjdWxhdGluZyB0aGUgc2NvcmUgb2YgZWFjaCBnYW1lIApjYWxjLndpbnMgPC0gZnVuY3Rpb24gKGFsaWNlLCBib2IpIHsKICAgIGdhbWVzIDwtIGJpbmRfY29scyhsaXN0KGFsaWNlLCBib2IpKSAlPiUgCiAgICAgICAgcmVuYW1lKGFsaWNlID0gVjEsIGJvYiA9IFYyKSAlPiUgCiAgICAgICAgbXV0YXRlKHNjb3JlID0gY2FzZV93aGVuKAogICAgICAgICAgICBhbGljZSA9PSAicm9jayIgJiBib2IgPT0gInJvY2siIH4gMAogICAgICAgICAgICAsIGFsaWNlID09ICJwYXBlciIgJiBib2IgPT0gInJvY2siIH4gMQogICAgICAgICAgICAsIGFsaWNlID09ICJzY2lzc29ycyIgJiBib2IgPT0gInJvY2siIH4gLTEKICAgICAgICAgICAgLCBhbGljZSA9PSAicm9jayIgJiBib2IgPT0gInBhcGVyIiB+IC0xCiAgICAgICAgICAgICwgYWxpY2UgPT0gInBhcGVyIiAmIGJvYiA9PSAicGFwZXIiIH4gMAogICAgICAgICAgICAsIGFsaWNlID09ICJzY2lzc29ycyIgJiBib2IgPT0gInBhcGVyIiB+IDEKICAgICAgICAgICAgLCBhbGljZSA9PSAicm9jayIgJiBib2IgPT0gInNjaXNzb3JzIiB+IDEKICAgICAgICAgICAgLCBhbGljZSA9PSAicGFwZXIiICYgYm9iID09ICJzY2lzc29ycyIgfiAtMQogICAgICAgICAgICAsIGFsaWNlID09ICJzY2lzc29ycyIgJiBib2IgPT0gInNjaXNzb3JzIiB+IDAKICAgICAgICAgICAgLCBUUlVFIH4gMAogICAgICAgICkpCiAgICByZXR1cm4oZ2FtZXMpCn0KYGBgCgoKIyAyCgpJbiBhIHNldCBvZiBwdXJlbHkgcmFuZG9tIGdhbWVzLCB3ZSB3b3VsZCBub3QgZXhwZWN0IGEgY2xlYXIgd2lubmVyIG9yIGxvb3NlciwgZS5nLiB1bmlmb3JtIGRpc3RyaWJ1dGlvbiBvZiAtMSwgMCwgMQoKc28gd2Ugc2ltdWxhdGUgdGhlIGdhbWVzCgpgYGB7cn0KYWxpY2UgPC0gc2FtcGxlKHJwcywgbi5nYW1lcywgcmVwbGFjZSA9IFRSVUUpCmJvYiA8LSBzYW1wbGUocnBzLCBuLmdhbWVzLCByZXBsYWNlID0gVFJVRSkKZ2FtZXMgPC0gY2FsYy53aW5zKGFsaWNlLCBib2IpCmBgYAoKU28gbGV0J3Mgc2VlIHdoYXQgdGhlIGRpc3RyaWJ1dGlvbiBvZiB0aGUgc2NvcmVzIHdlcmUgZnJvbSB0aGUgc2ltdWxhdGlvbi4KCmBgYHtyfQpnYW1lcyAlPiUgY291bnQoc2NvcmUpCmBgYAoKYGBge3J9CmdhbWVzICU+JSAKICAgIGdncGxvdChhZXMoeCA9IGZhY3RvcihzY29yZSkpKSArCiAgICBnZW9tX2JhcigpICsgCiAgICBsYWJzKHRpdGxlID0gIkxvb2tzIGxpa2UgYSB1bmlmb3JtIGRpc3RyaWJ1dGlvbiBvbiB0aGUgc2NvcmVzIiwgeCA9ICJTY29yZSIsIHkgPSAiQ291bnQiLCBjYXB0aW9uID0gImZyb20gcmFuZG9tIHZzIHJhbmRvbSIpCmBgYAoKV2VsbCBjZXJ0YWlubHkgbG9va3MgdW5pZm9ybSwgYnV0IGhvdyB0byBiZSBtb3JlIHByZWNpc2UgYWJvdXQgaXQ/IExldCdzIHVzZSBhIGNoaS1zcXVhcmVkIHRlc3QuIAoKSW4gYSBjaGktc3F1YXJlZCB0ZXN0LCB3ZSdyZSB0ZXN0aW5nIHRoZSBjaGFuY2VzLCB1bmRlciB0aGUgbnVsbCBoeXBvdGhlc2lzIHRoYXQgd2Ugc2hvdWxkIGhhdmUgaGFkIGEgdW5pZm9ybSBkaXN0cmlidXRpb24sIHRoYXQgd2UnZCBzZWUgdGhpcyBkaXN0cmlidXRpb24gYnkgcmFuZG9tIGNoYW5jZQoKYGBge3J9CmdhbWVzICU+JSAKICAgIGNvdW50KHNjb3JlKSAlPiUgCiAgICBzcHJlYWQoa2V5ID0gc2NvcmUsIHZhbHVlID0gbiwgZmlsbCA9IDApICU+JSAKICAgIGNoaXNxLnRlc3QoKQpgYGAKCm9rLCBzbyB0aGUgcC12YWx1ZSBpcyB2ZXJ5IGhpZ2gsIGdyZWF0ZXIgdGhhbiA3MCUgb2YgdGhlIHRpbWUsIHdlJ2Qgc2VlIGEgZGlzdHJpYnV0aW9uIGxpa2UgdGhpcyBqdXN0IGJ5IGNoYW5jZS4KCgouLi4gd2hhdCBpZiB3ZSBkaWQgdGhpcyB1c2luZyByZXNhbXBsaW5nIHRlY2huaXF1ZT8gQWN0dWFsbHkgdGhpcyBicmVha3MgUlN0dWRpbyBjbG91ZAoKYGBge3J9CiMgZ2FtZXMgJT4lCiMgICAgIGNvdW50KHNjb3JlKSAlPiUKIyAgICAgc3ByZWFkKGtleSA9IHNjb3JlLCB2YWx1ZSA9IG4sIGZpbGwgPSAwKSAlPiUKIyAgICAgY2hpc3EudGVzdChzaW11bGF0ZS5wLnZhbHVlID0gVFJVRSkKYGBgCgoKLi4uIHdoYXQgaWYgd2UgZGlkIHRoaXMgdGVzdCBieSBoYW5kPyAKCldlbGwgdGhlIFBlYXJzb24gcmVzaWR1YWxzIGZvciBlYWNoIGNlbGwgaXM6IChhY3R1YWwgLSBleHBlY3RlZCkgLyBzcXJ0KGV4cGVjdGVkKQoKYGBge3J9CmdhbWVzICU+JSAKICAgIGNvdW50KHNjb3JlKSAlPiUgCiAgICBzcHJlYWQoa2V5ID0gc2NvcmUsIHZhbHVlID0gbiwgZmlsbCA9IDApICU+JSAKICAgIG11dGF0ZSgKICAgICAgICBgLTFgID0gKGAtMWAgLSBuLmdhbWVzLzMpIC8gc3FydChuLmdhbWVzLzMpCiAgICAgICAgLCBgMGAgPSAoYDBgIC0gbi5nYW1lcy8zKSAvIHNxcnQobi5nYW1lcy8zKQogICAgICAgICwgYDFgID0gKGAxYCAtIG4uZ2FtZXMvMykgLyBzcXJ0KG4uZ2FtZXMvMykpCmBgYAoKQW5kIHRoZSBjaGktc3F1YXJlZCBzdGF0aXN0aWMgaXMgZGVmaW5lZCBhcyB0aGUgc3VtIG9mIHRoZSBzcXVhcmVkIFBlYXJzb24gcmVzaWR1YWxzCgpgYGB7cn0KZ2FtZXMgJT4lIAogICAgY291bnQoc2NvcmUpICU+JSAKICAgIHNwcmVhZChrZXkgPSBzY29yZSwgdmFsdWUgPSBuLCBmaWxsID0gMCkgJT4lIAogICAgbXV0YXRlKAogICAgICAgIGAtMWAgPSAoYC0xYCAtIG4uZ2FtZXMvMykgLyBzcXJ0KG4uZ2FtZXMvMykKICAgICAgICAsIGAwYCA9IChgMGAgLSBuLmdhbWVzLzMpIC8gc3FydChuLmdhbWVzLzMpCiAgICAgICAgLCBgMWAgPSAoYDFgIC0gbi5nYW1lcy8zKSAvIHNxcnQobi5nYW1lcy8zKSkgJT4lIAogICAgZ2F0aGVyKGtleSA9IHNjb3JlLCB2YWx1ZSA9IHJlc2lkdWFscykgJT4lIAogICAgc3VtbWFyaXplKGMgPSBzdW0ocmVzaWR1YWxzKSkKYGBgCgoKCgojIDMKCkJ1dCB3aGF0IGlmIEFsaWNlIHVzZXMgdGhlIGZvbGxvd2luZyBhbGdvcml0aG0/CgoqIGluIGZpcnN0IGdhbWUsIHJhbmRvbWx5IHBpY2sKCmBgYHtyfQoKYGBgCgo=</div>
 
 
 

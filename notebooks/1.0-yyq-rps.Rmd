@@ -8,3 +8,150 @@ Played Rock Paper Scissors at Evelyn's house
 * I beat five or seven players in a row using dad's algorithm
 * Is dad's algorithm actually better than randomly picking r p s?
 
+```{r}
+# library(tidyverse)
+# looks like readr is broken at the moment
+# see https://community.rstudio.com/t/issue-with-installing-the-drc-package/18701/3
+
+```
+
+
+
+```{r}
+library(tidyr)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+```
+
+# 1
+
+
+Rules for our simulation
+
+* Alice is our stand-in: every win, she gets a point, every tie she gets no points, and every loss she looses a point
+* Bob is our opponent
+
+
+
+Some simulation parameters and helper functions 
+
+```{r}
+nm <- c("rock", "paper", "scissors")
+rps <- factor(nm, levels = nm)
+n.games <- 60000
+```
+
+
+```{r}
+# helper function, given vectors of alice and bob results, column binds and calculating the score of each game 
+calc.wins <- function (alice, bob) {
+    games <- bind_cols(list(alice, bob)) %>% 
+        rename(alice = V1, bob = V2) %>% 
+        mutate(score = case_when(
+            alice == "rock" & bob == "rock" ~ 0
+            , alice == "paper" & bob == "rock" ~ 1
+            , alice == "scissors" & bob == "rock" ~ -1
+            , alice == "rock" & bob == "paper" ~ -1
+            , alice == "paper" & bob == "paper" ~ 0
+            , alice == "scissors" & bob == "paper" ~ 1
+            , alice == "rock" & bob == "scissors" ~ 1
+            , alice == "paper" & bob == "scissors" ~ -1
+            , alice == "scissors" & bob == "scissors" ~ 0
+            , TRUE ~ 0
+        ))
+    return(games)
+}
+```
+
+
+# 2
+
+In a set of purely random games, we would not expect a clear winner or looser, e.g. uniform distribution of -1, 0, 1
+
+so we simulate the games
+
+```{r}
+alice <- sample(rps, n.games, replace = TRUE)
+bob <- sample(rps, n.games, replace = TRUE)
+games <- calc.wins(alice, bob)
+```
+
+So let's see what the distribution of the scores were from the simulation.
+
+```{r}
+games %>% count(score)
+```
+
+```{r}
+games %>% 
+    ggplot(aes(x = factor(score))) +
+    geom_bar() + 
+    labs(title = "Looks like a uniform distribution on the scores", x = "Score", y = "Count", caption = "from random vs random")
+```
+
+Well certainly looks uniform, but how to be more precise about it? Let's use a chi-squared test. 
+
+In a chi-squared test, we're testing the chances, under the null hypothesis that we should have had a uniform distribution, that we'd see this distribution by random chance
+
+```{r}
+games %>% 
+    count(score) %>% 
+    spread(key = score, value = n, fill = 0) %>% 
+    chisq.test()
+```
+
+ok, so the p-value is very high, greater than 70% of the time, we'd see a distribution like this just by chance.
+
+
+... what if we did this using resampling technique? Actually this breaks RStudio cloud
+
+```{r}
+# games %>%
+#     count(score) %>%
+#     spread(key = score, value = n, fill = 0) %>%
+#     chisq.test(simulate.p.value = TRUE)
+```
+
+
+... what if we did this test by hand? 
+
+Well the Pearson residuals for each cell is: (actual - expected) / sqrt(expected)
+
+```{r}
+games %>% 
+    count(score) %>% 
+    spread(key = score, value = n, fill = 0) %>% 
+    mutate(
+        `-1` = (`-1` - n.games/3) / sqrt(n.games/3)
+        , `0` = (`0` - n.games/3) / sqrt(n.games/3)
+        , `1` = (`1` - n.games/3) / sqrt(n.games/3))
+```
+
+And the chi-squared statistic is defined as the sum of the squared Pearson residuals
+
+```{r}
+games %>% 
+    count(score) %>% 
+    spread(key = score, value = n, fill = 0) %>% 
+    mutate(
+        `-1` = (`-1` - n.games/3) / sqrt(n.games/3)
+        , `0` = (`0` - n.games/3) / sqrt(n.games/3)
+        , `1` = (`1` - n.games/3) / sqrt(n.games/3)) %>% 
+    gather(key = score, value = residuals) %>% 
+    summarize(c = sum(residuals))
+```
+
+
+
+
+# 3
+
+But what if Alice uses the following algorithm?
+
+* in first game, randomly pick
+
+```{r}
+
+```
+
